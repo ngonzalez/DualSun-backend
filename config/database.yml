@@ -1,0 +1,19 @@
+local_defaults: &local-defaults
+  adapter: postgresql
+  encoding: utf8
+  host: <%= POSTGRESQL_HOST %>
+  port: <%= POSTGRESQL_PORT %>
+  username: <%= POSTGRESQL_USERNAME %>
+  password: <%= POSTGRESQL_PASSWORD %>
+
+test:
+  <<: *local-defaults
+  database: <%= "#{POSTGRESQL_DB}_test" %>
+
+development:
+  <<: *local-defaults
+  database: <%= "#{POSTGRESQL_DB}" %>
+
+production:
+  <<: *local-defaults
+  database: <%= "#{POSTGRESQL_DB}" %>
