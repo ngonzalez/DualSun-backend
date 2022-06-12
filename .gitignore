@@ -4,3 +4,5 @@ log/*.log
 .bundle
 public
 .env
+tmp/pids/server.pid
+tmp/restart.txt
