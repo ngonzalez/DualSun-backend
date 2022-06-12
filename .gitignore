@@ -6,3 +6,4 @@ public
 .env
 tmp/pids/server.pid
 tmp/restart.txt
+tmp/development_secret.txt
