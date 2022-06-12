@@ -3,9 +3,8 @@ module Types
     graphql_name "Customer"
 
     implements GraphQL::Types::Relay::Node
-    global_id_field :id
 
-    field :item_id, Integer, null: false
+    field :item_id, Integer
     field :name, String, null: false
     field :email, String, null: false
     field :phone, String, null: false

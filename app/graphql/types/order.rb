@@ -3,9 +3,8 @@ module Types
     graphql_name "Order"
 
     implements GraphQL::Types::Relay::Node
-    global_id_field :id
 
-    field :item_id, Integer, null: false
+    field :item_id, Integer
     field :company_name, String, null: false
     field :company_siren, String, null: false
     field :order_address, String, null: false
