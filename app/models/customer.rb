@@ -3,6 +3,7 @@
 # Table name: customers
 #
 #  id         :bigint           not null, primary key
+#  deleted_at :datetime
 #  email      :string           not null
 #  name       :string           not null
 #  phone      :string           not null
