@@ -18,13 +18,11 @@ class Order < ActiveRecord::Base
   validates :company_name, presence: true
 
   validates :company_siren, presence: true
-
   validates :company_siren, length: { is: 9 }
 
   validates :order_address, presence: true
 
   validates :order_date, presence: true
-
   validates :order_date, comparison: { greater_than: Date.today }
 
   has_paper_trail
