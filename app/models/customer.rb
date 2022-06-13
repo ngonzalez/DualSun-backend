@@ -11,6 +11,10 @@
 #  updated_at :datetime         not null
 #  order_id   :integer          not null
 #
+# Indexes
+#
+#  index_customers_on_order_id  (order_id) UNIQUE
+#
 class Customer < ActiveRecord::Base
   belongs_to :order, class_name: "Order", foreign_key: :order_id
 

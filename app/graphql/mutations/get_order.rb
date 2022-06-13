@@ -9,7 +9,6 @@ module Mutations
 
     def resolve(args)
       order = Order.find args[:order_id]
-      puts "order: #{order.inspect}"
 
       MutationResult.call(
         obj: {

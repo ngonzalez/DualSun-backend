@@ -22,6 +22,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_12_224401) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_customers_on_order_id", unique: true
   end
 
   create_table "orders", force: :cascade do |t|
