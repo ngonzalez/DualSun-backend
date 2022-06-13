@@ -12,7 +12,7 @@
 #  order_id   :integer          not null
 #
 class Customer < ActiveRecord::Base
-  belongs_to :order
+  belongs_to :order, class_name: "Order", foreign_key: :order_id
 
   validates :name, presence: true
 

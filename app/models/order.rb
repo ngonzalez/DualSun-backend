@@ -13,8 +13,8 @@
 #  updated_at    :datetime         not null
 #
 class Order < ActiveRecord::Base
-  has_many :customers
-  
+  has_many :customers, class_name: "Customer", dependent: :destroy, foreign_key: :order_id
+
   validates :company_name, presence: true
 
   validates :company_siren, presence: true

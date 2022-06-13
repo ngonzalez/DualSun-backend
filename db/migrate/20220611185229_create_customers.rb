@@ -6,6 +6,7 @@ class CreateCustomers < ActiveRecord::Migration[7.0]
       t.string :email, null: false
       t.string :phone, null: false
       t.datetime :deleted_at
+      t.index [:order_id], name: :index_customers_on_order_id, unique: true
       t.timestamps
     end
   end

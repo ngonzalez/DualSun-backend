@@ -59,4 +59,5 @@ else
   raise "Missing ENV REDIS_DB"
 end
 
+
 PANEL_TYPES = YAML.load_file File.expand_path('../config/yaml/panel_types.yaml', __dir__)
