@@ -1,11 +1,17 @@
 require "rails_helper"
 
 RSpec.describe "Get an order" do
+  require "rails_helper"
+
+  before(:each) do
+    @order = FactoryBot.create(:order)
+    @customer = FactoryBot.create(:customer, order: @order)
+  end
+
   subject(:request) {
     post "/graphql", headers: { 'Content-Type' => 'application/json' }, params: { query: query, variables: variables }.to_json
   }
-  let(:order) { FactoryBot.create(:order) }
-  let(:customer) { FactoryBot.create(:customer, order: order) }
+
   let(:query) do
     <<~GRAPHQL
     mutation getOrder(
@@ -36,8 +42,7 @@ RSpec.describe "Get an order" do
   end
   let(:variables) do
     {
-      orderId: order.id,
-      customerId: customer.id,
+      orderId: @order.id,
     }
   end
   let(:expected_result) do
@@ -45,17 +50,17 @@ RSpec.describe "Get an order" do
       data: {
         getOrder: {
           order: {
-            companyName: order.company_name,
-            companySiren: order.company_siren,
-            orderAddress: order.order_address,
-            orderDate: order.order_date.to_s,
-            panels: order.panels,
+            companyName: @order.company_name,
+            companySiren: @order.company_siren,
+            orderAddress: @order.order_address,
+            orderDate: @order.order_date.to_s,
+            panels: @order.panels,
           },
           customers: [
             {
-              name: customer.name,
-              email: customer.email,
-              phone: customer.phone,
+              name: @customer.name,
+              email: @customer.email,
+              phone: @customer.phone,
             },
           ],
           success: true,
