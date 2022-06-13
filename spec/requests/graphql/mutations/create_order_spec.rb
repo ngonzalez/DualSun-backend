@@ -47,10 +47,10 @@ RSpec.describe "Creates an order" do
       companyName: Faker::Company.name,
       companySiren: Faker::Number.leading_zero_number(digits: 9),
       orderAddress: Faker::Address.full_address,
-      orderDate: 10.days.from_now,
-      customers: "[{\"name\":\"#{Faker::Name.name}\",\"email\":\"#{Faker::Internet.email}\",\"phone\":\"#{Faker::PhoneNumber.cell_phone}\"}]",
-      panels: "[{\"panelId\":\"#{Faker::IDNumber.valid}\",\"panelType\":\"#{PANEL_TYPES[:photovoltaic]}\"},
-                {\"panelId\":\"#{Faker::IDNumber.valid}\",\"panelType\":\"#{PANEL_TYPES[:hybrid]}\"}]"
+      orderDate: 10.days.from_now.to_s,
+      customers: [{ name: Faker::Name.name, email: Faker::Internet.email, phone: Faker::PhoneNumber.cell_phone }].to_json,
+      panels: [{ panelId: Faker::IDNumber.valid, panelType: PANEL_TYPES[:photovoltaic] },
+               { panelId: Faker::IDNumber.valid, panelType: PANEL_TYPES[:hybrid] }].to_json
     }
   end
   let(:expected_result) do

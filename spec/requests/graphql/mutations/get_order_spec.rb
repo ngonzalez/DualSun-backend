@@ -37,6 +37,7 @@ RSpec.describe "Get an order" do
   let(:variables) do
     {
       orderId: order.id,
+      customerId: customer.id,
     }
   end
   let(:expected_result) do

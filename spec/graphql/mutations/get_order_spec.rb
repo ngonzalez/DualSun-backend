@@ -7,12 +7,13 @@ RSpec.describe Mutations::GetOrder do
     it "Get order" do
       variables = {
         orderId: order.id,
+        customerId: customer.id,
       }
 
       query = GraphQL::Query.new(
         DualSunBackendSchema,
         mutation,
-        variables: variables.deep_stringify_keys,
+        variables: variables,
         context: {},
       )
 
@@ -22,13 +23,16 @@ RSpec.describe Mutations::GetOrder do
       expect(result.dig("data", "getOrder", "order", "companySiren")).to eq(order.company_siren)
       expect(result.dig("data", "getOrder", "order", "orderAddress")).to eq(order.order_address)
       expect(result.dig("data", "getOrder", "order", "orderDate")).to eq(order.order_date.to_s)
+      expect(result.dig("data", "getOrder", "customers", 0, "name")).to eq(order.customers[0].name)
+      expect(result.dig("data", "getOrder", "customers", 0, "email")).to eq(order.customers[0].email)
+      expect(result.dig("data", "getOrder", "customers", 0, "phone")).to eq(order.customers[0].phone)
     end
   end
 
   def mutation
     <<~GQL
     mutation getOrder(
-      $orderId: Int!
+      $orderId: Int!,
     ) {
       getOrder(input: {
         orderId: $orderId,

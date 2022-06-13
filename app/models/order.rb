@@ -15,15 +15,15 @@
 class Order < ActiveRecord::Base
   has_many :customers, class_name: "Customer", dependent: :destroy, foreign_key: :order_id
 
-  validates :company_name, presence: true
-
-  validates :company_siren, presence: true
-  validates :company_siren, length: { is: 9 }
-
-  validates :order_address, presence: true
-
-  validates :order_date, presence: true
-  validates :order_date, comparison: { greater_than: Date.today }
+  # validates :company_name, presence: true
+  #
+  # validates :company_siren, presence: true
+  # validates :company_siren, length: { is: 9 }
+  #
+  # validates :order_address, presence: true
+  #
+  # validates :order_date, presence: true
+  # validates :order_date, comparison: { greater_than: Date.today }
 
   has_paper_trail
 

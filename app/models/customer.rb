@@ -18,12 +18,12 @@
 class Customer < ActiveRecord::Base
   belongs_to :order, class_name: "Order", foreign_key: :order_id
 
-  validates :name, presence: true
-
-  validates :email, presence: true
-  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP } 
-
-  validates :phone, presence: true
+  # validates :name, presence: true
+  #
+  # validates :email, presence: true
+  # validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
+  #
+  # validates :phone, presence: true
 
   has_paper_trail
 

@@ -2,7 +2,7 @@ module Mutations
   class GetOrder < Mutations::BaseMutation
     graphql_name "GetOrder"
 
-    argument :order_id, Int, required: true
+    argument :order_id, Integer, required: true
 
     field :order, Types::Order, null: false
     field :customers, [Types::Customer], null: false
