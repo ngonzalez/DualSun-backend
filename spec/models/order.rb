@@ -1,6 +1,10 @@
 require "rails_helper"
 
 RSpec.describe Order, type: :model do
+  it { is_expected.to validate_presence_of(:company_name) }
+  it { is_expected.to validate_presence_of(:company_siren) }
+  it { is_expected.to validate_presence_of(:order_address) }
+  it { is_expected.to validate_presence_of(:order_date) }
   context do 'order and customer'
     setup do
       @order = FactoryBot.create(:order)
@@ -17,10 +21,6 @@ RSpec.describe Order, type: :model do
     setup do
        @order = FactoryBot.build(:order, panels: nil)
     end
-    it { is_expected.to validate_presence_of(:company_name) }
-    it { is_expected.to validate_presence_of(:company_siren) }
-    it { is_expected.to validate_presence_of(:order_address) }
-    it { is_expected.to validate_presence_of(:order_date) }
     it 'has no panels' do
       expect(@order.panels).to be_nil
     end

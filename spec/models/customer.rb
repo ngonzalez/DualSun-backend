@@ -1,6 +1,9 @@
 require "rails_helper"
 
 RSpec.describe Customer, type: :model do
+  it { is_expected.to validate_presence_of(:name) }
+  it { is_expected.to validate_presence_of(:email) }
+  it { is_expected.to validate_presence_of(:phone) }
   context do 'order exists'
     setup do
       @order = FactoryBot.create(:order)
@@ -20,9 +23,6 @@ RSpec.describe Customer, type: :model do
       setup do
         @customer = @order.customers.new
       end
-      it { is_expected.to validate_presence_of(:name) }
-      it { is_expected.to validate_presence_of(:email) }
-      it { is_expected.to validate_presence_of(:phone) }
     end
     context do 'a valid customer'
       setup do
