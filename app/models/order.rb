@@ -14,7 +14,7 @@
 #
 
 class Order < ActiveRecord::Base
-  has_many :customers, class_name: "Customer", dependent: :destroy, foreign_key: :order_id
+  has_many :customers
 
   validates :company_name, presence: true, allow_blank: false
   validates :company_siren, presence: true, allow_blank: false

@@ -16,7 +16,7 @@
 #  index_customers_on_order_id  (order_id) UNIQUE
 #
 class Customer < ActiveRecord::Base
-  belongs_to :order, class_name: "Order", foreign_key: :order_id
+  belongs_to :order
 
   validates :name, presence: true, allow_blank: false
   validates :email, presence: true, allow_blank: false
