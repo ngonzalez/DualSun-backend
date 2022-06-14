@@ -1,5 +1,6 @@
 class ValidatesPanels < ActiveModel::Validator
   def validates_panels(record)
+    return false if record.panels.blank?
     panels_json = JSON.parse(record.panels)
     panels_json.any? && \
     panels_json.all? do |item|
