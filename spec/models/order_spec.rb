@@ -5,26 +5,44 @@ RSpec.describe Order, type: :model do
   it { is_expected.to validate_presence_of(:company_siren) }
   it { is_expected.to validate_presence_of(:order_address) }
   it { is_expected.to validate_presence_of(:order_date) }
-  context do 'order and customer'
+  context 'order and a valid customer' do
     setup do
       @order = FactoryBot.create(:order)
       @customer = FactoryBot.create(:customer, order: @order)
     end
-    it 'has customers' do
+    it 'order should be valid' do
+      expect(@order.valid?).to eq(true)
+    end
+    it 'order has customers' do
       expect(@order.customers.length).to eq(1)
     end
     it 'is attached to order' do
       expect(@customer.order).to eq(@order)
     end
   end
-  context do 'a new order with empty company siren'
+  context 'order and customer with invalid email' do
+    setup do
+      @order = FactoryBot.create(:order)
+      @customer = FactoryBot.build(:customer, order: @order, email: nil)
+    end
+    it 'order should not be valid' do
+      expect(@order.valid?).to eq(true)
+    end
+    it 'order has no customers' do
+      expect(@order.customers.length).to eq(0)
+    end
+    it 'is attached to order' do
+      expect(@customer.order).to eq(@order)
+    end
+  end
+  context 'a new order with empty company siren' do
     setup do
        @order = FactoryBot.build(:order, company_siren: nil)
     end
-    it 'has no company siren' do
+    it 'order has no company siren' do
       expect(@order.company_siren).to be_nil
     end
-    context do 'a valid company siren'
+    context 'a valid company siren' do
       setup do
         @order.company_siren = '123456789'
       end
@@ -32,7 +50,7 @@ RSpec.describe Order, type: :model do
         expect(@order.save).to eq(true)
         expect(@order.errors.full_messages).to eq([])
       end
-      context do 'an invalid company siren'
+      context 'an invalid company siren' do
         setup do
           @order.company_siren = '12345678'
         end
@@ -43,14 +61,14 @@ RSpec.describe Order, type: :model do
       end
     end
   end
-  context do 'a new order with empty order date'
+  context 'a new order with empty order date' do
     setup do
        @order = FactoryBot.build(:order, order_date: nil)
     end
-    it 'has no order date' do
+    it 'order has no order date' do
       expect(@order.order_date).to be_nil
     end
-    context do 'a valid order date'
+    context 'a valid order date' do
       setup do
         @order.order_date = Date.tomorrow
       end
@@ -58,7 +76,7 @@ RSpec.describe Order, type: :model do
         expect(@order.save).to eq(true)
         expect(@order.errors.full_messages).to eq([])
       end
-      context do 'an invalid order date before today'
+      context 'an invalid order date before today' do
         setup do
           @order.order_date = Date.yesterday
         end
@@ -69,14 +87,14 @@ RSpec.describe Order, type: :model do
       end
     end
   end
-  context do 'a new order with empty panels'
+  context 'a new order with empty panels' do
     setup do
        @order = FactoryBot.build(:order, panels: nil)
     end
-    it 'has no panels' do
+    it 'order has no panels' do
       expect(@order.panels).to be_nil
     end
-    context do 'valid panels'
+    context 'valid panels' do
       setup do
         @panel = [{ "panelId" => Faker::IDNumber.valid, "panelType" => PANEL_TYPES[:photovoltaic] }]
         @order.panels = @panel.to_json
@@ -89,7 +107,7 @@ RSpec.describe Order, type: :model do
         expect(@order.errors.full_messages).to eq([])
       end
     end
-    context do 'invalid panels'
+    context 'invalid panels' do
       setup do
         @panel = [{ "panelId" => Faker::IDNumber.valid, "panelType" => "test" }]
         @order.panels = @panel.to_json

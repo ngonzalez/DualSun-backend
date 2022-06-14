@@ -4,11 +4,11 @@ RSpec.describe Customer, type: :model do
   it { is_expected.to validate_presence_of(:name) }
   it { is_expected.to validate_presence_of(:email) }
   it { is_expected.to validate_presence_of(:phone) }
-  context do 'order exists'
+  context 'order exists' do
     setup do
       @order = FactoryBot.create(:order)
     end
-    context do 'create a factory customer'
+    context 'create a factory customer' do
       setup do
         @customer = FactoryBot.create(:customer, order: @order)
       end
@@ -19,19 +19,19 @@ RSpec.describe Customer, type: :model do
         expect(@customer.order).to eq(@order)
       end
     end
-    context do 'a new customer'
+    context 'a new customer' do
       setup do
         @customer = @order.customers.new
       end
     end
-    context do 'a valid customer'
+    context 'a valid customer' do
       setup do
         @customer = FactoryBot.create(:customer, order: @order)
       end
       it 'validates email' do
         expect(@customer.valid?).to eq(true)
       end
-      context do 'it has no email'
+      context 'it has no email' do
         setup do
           @customer.email = nil
         end
@@ -40,7 +40,7 @@ RSpec.describe Customer, type: :model do
           expect(@customer.errors.full_messages).to eq(["Email can't be blank", "Email is invalid"])
         end
       end
-      context do 'it has an invalid email'
+      context 'it has an invalid email' do
         setup do
           @customer.email = "test"
         end
@@ -49,7 +49,7 @@ RSpec.describe Customer, type: :model do
           expect(@customer.errors.full_messages).to eq(["Email is invalid"])
         end
       end
-      context do 'a valid email'
+      context 'a valid email' do
         setup do
           @customer.email = "test@example.com"
         end
