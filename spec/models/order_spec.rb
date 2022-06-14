@@ -5,12 +5,12 @@ RSpec.describe Order, type: :model do
   it { is_expected.to validate_presence_of(:company_siren) }
   it { is_expected.to validate_presence_of(:order_address) }
   it { is_expected.to validate_presence_of(:order_date) }
-  context 'order and a valid customer' do
+  context 'factory bot order and customer' do
     setup do
       @order = FactoryBot.create(:order)
       @customer = FactoryBot.create(:customer, order: @order)
     end
-    it 'order should be valid' do
+    it 'should be valid' do
       expect(@order.valid?).to eq(true)
     end
     it 'order has customers' do
@@ -20,18 +20,34 @@ RSpec.describe Order, type: :model do
       expect(@customer.order).to eq(@order)
     end
   end
-  context 'order and customer with invalid email' do
+  context 'new order and customer' do
     setup do
       @order = FactoryBot.create(:order)
-      @customer = FactoryBot.build(:customer, order: @order, email: nil)
+      @customer = @order.customers.new(name: Faker::Name.name, phone: Faker::PhoneNumber.cell_phone, email: Faker::Internet.email)
     end
-    it 'order should not be valid' do
+    it 'should be valid' do
       expect(@order.valid?).to eq(true)
     end
-    it 'order has no customers' do
-      expect(@order.customers.length).to eq(0)
+    it 'order has customers' do
+      expect(@order.customers.length).to eq(1)
     end
     it 'is attached to order' do
+      expect(@customer.order).to eq(@order)
+    end
+  end
+  context 'new order and customer without email' do
+    setup do
+      @order = FactoryBot.create(:order)
+      @customer = @order.customers.new(name: Faker::Name.name, phone: Faker::PhoneNumber.cell_phone)
+    end
+    it 'should not be valid' do
+      expect(@order.valid?).to eq(false)
+      expect(@order.errors.full_messages).to eq(["Customers is invalid"])
+    end
+    it 'order has customers' do
+      expect(@order.customers.length).to eq(1)
+    end
+    it 'is not attached to order' do
       expect(@customer.order).to eq(@order)
     end
   end

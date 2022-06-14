@@ -24,7 +24,6 @@ class Order < ActiveRecord::Base
   validates :order_date, comparison: { greater_than: Date.today }
 
   include ActiveModel::Validations
-  validates_with ValidatesCustomers
   validates_with ValidatesPanels
 
   has_paper_trail
