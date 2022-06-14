@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: customers
+#
+#  id         :bigint           not null, primary key
+#  deleted_at :datetime
+#  email      :string           not null
+#  name       :string           not null
+#  phone      :string           not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  order_id   :integer          not null
+#
+# Indexes
+#
+#  index_customers_on_order_id  (order_id) UNIQUE
+#
 require "rails_helper"
 
 RSpec.describe Customer, type: :model do

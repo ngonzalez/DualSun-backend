@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: orders
+#
+#  id            :bigint           not null, primary key
+#  company_name  :string           not null
+#  company_siren :string           not null
+#  deleted_at    :datetime
+#  order_address :string           not null
+#  order_date    :datetime         not null
+#  panels        :jsonb            not null
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#
 require "rails_helper"
 
 RSpec.describe Order, type: :model do
